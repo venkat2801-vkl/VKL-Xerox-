@@ -2,927 +2,1781 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#ffffff">
 <title>VKL Studios Xerox</title>
 
 <style>
 *{box-sizing:border-box}
 :root{
-  --primary:#ff3d00;
-  --primary2:#ff6d00;
-  --text:#171717;
+  --orange:#ff4d16;
+  --orange2:#ff7a35;
+  --ink:#171717;
   --muted:#777;
-  --bg:#f7f7f7;
+  --bg:#f6f7f9;
   --card:#fff;
-  --border:#e9e9e9;
+  --line:#e9eaed;
   --green:#16a34a;
+  --shadow:0 8px 30px rgba(20,20,20,.07)
 }
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 button,input,select{font:inherit}
-button{cursor:pointer}
-.app{max-width:620px;margin:auto;min-height:100vh;background:#f7f7f7}
-.header{
-  background:#fff;
-  padding:18px 18px 14px;
-  position:sticky;top:0;z-index:20;
-  border-bottom:1px solid #eee;
+button{border:0;cursor:pointer}
+button:active{transform:scale(.98)}
+
+#app{max-width:520px;margin:auto;min-height:100vh;background:var(--bg)}
+
+.screen{display:none;min-height:100vh;padding-bottom:90px}
+.screen.active{display:block}
+
+.top{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--line);
+  padding:15px 17px;
 }
-.brand{font-size:22px;font-weight:900}
-.brand span{color:var(--primary)}
-.tagline{font-size:12px;color:#777;margin-top:3px}
+.toprow{display:flex;align-items:center;gap:12px}
+.back{
+  width:38px;height:38px;border-radius:12px;
+  background:#f2f3f5;font-size:19px
+}
+.title{font-size:18px;font-weight:900}
+.sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+.content{padding:16px}
+
+.brand{
+  padding:25px 18px 8px;
+}
+.logo{
+  font-size:25px;font-weight:950;letter-spacing:-.7px
+}
+.logo span{color:var(--orange)}
+.tagline{font-size:12px;color:#777;margin-top:4px}
+
 .search{
-  margin-top:14px;
-  background:#f3f3f3;
-  border-radius:14px;
-  padding:12px 14px;
-  display:flex;
-  gap:10px;
-  align-items:center;
+  margin-top:17px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:13px 15px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:var(--shadow)
 }
-.search input{border:0;outline:0;background:none;width:100%;font-size:14px}
-main{padding:16px;padding-bottom:95px}
+.search input{
+  width:100%;border:0;outline:0;background:none;
+  font-size:14px
+}
+
 .hero{
-  background:linear-gradient(135deg,#fff2ec,#fff);
-  border-radius:22px;
-  padding:20px;
-  margin-bottom:16px;
-  border:1px solid #ffe0d4;
+  margin:13px 16px 17px;
+  padding:21px;
+  border-radius:23px;
+  background:linear-gradient(135deg,#fff0e9,#fff);
+  border:1px solid #ffe0d3;
+  position:relative;
+  overflow:hidden
 }
-.hero h1{margin:0;font-size:25px}
-.hero p{color:#666;font-size:13px;line-height:1.5}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:110px;height:110px;
+  right:-35px;top:-30px;
+  background:#ff5b2030;
+  border-radius:50%
+}
+.hero h1{margin:0;font-size:24px;letter-spacing:-.5px}
+.hero p{margin:8px 0 13px;color:#6e6e6e;font-size:12px;line-height:1.5}
+.badge{
+  display:inline-flex;padding:6px 10px;border-radius:20px;
+  background:#e9f9ee;color:#13843b;
+  font-size:10px;font-weight:900
+}
+
+.cards{padding:0 16px;display:grid;gap:12px}
+
 .service{
   background:#fff;
-  border:1px solid var(--border);
-  border-radius:18px;
+  border:1px solid var(--line);
+  border-radius:20px;
   padding:17px;
-  min-height:155px;
-  box-shadow:0 3px 12px #00000008;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden
 }
-.service .icon{font-size:32px}
-.service h3{margin:9px 0 5px;font-size:16px}
-.service p{font-size:12px;color:#777;margin:0 0 14px;line-height:1.4}
-.btn{
-  border:0;
-  border-radius:12px;
-  padding:11px 14px;
-  font-weight:800;
-}
-.primary{background:var(--primary);color:#fff}
-.secondary{background:#f1f1f1;color:#222}
-.full{width:100%}
-.section{margin-top:22px}
-.section-title{font-size:18px;font-weight:900;margin-bottom:12px}
-.upload-box{
-  background:#fff;
-  border:2px dashed #ddd;
-  border-radius:18px;
-  padding:25px 16px;
-  text-align:center;
-}
-.upload-box .big{font-size:40px}
-.upload-box p{color:#777;font-size:13px}
-.file-list{margin-top:12px}
-.file{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:12px;
+.service-art{
+  height:105px;
+  border-radius:16px;
   display:flex;
   align-items:center;
-  gap:10px;
-  margin-bottom:8px;
+  justify-content:center;
+  font-size:52px;
+  margin-bottom:14px
 }
-.file-icon{font-size:25px}
-.file-info{flex:1;min-width:0}
-.file-name{font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.file-meta{font-size:11px;color:#888;margin-top:3px}
-.remove{background:#fff0ed;color:#e53935;border:0;border-radius:9px;padding:7px}
-.settings{
-  background:#fff;
-  border-radius:18px;
-  padding:16px;
-  border:1px solid var(--border);
-}
-.label{font-size:13px;font-weight:800;margin:15px 0 8px}
-.options{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.option{
-  border:1px solid #ddd;
-  background:#fff;
-  border-radius:12px;
-  padding:12px 8px;
-  text-align:center;
-  font-size:13px;
-  font-weight:700;
-}
-.option small{display:block;color:#777;font-weight:500;margin-top:3px}
-.option.active{
-  border:2px solid var(--primary);
-  background:#fff5f1;
-  color:var(--primary);
-}
-select,input.text{
+.doc-art{background:linear-gradient(135deg,#eef5ff,#f8fbff)}
+.pass-art{background:linear-gradient(135deg,#fff1e9,#fff9f6)}
+
+.service h3{margin:0;font-size:17px}
+.service p{margin:5px 0 14px;font-size:12px;color:#777;line-height:1.4}
+
+.btn{
   width:100%;
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:12px;
-  background:#fff;
-  outline:none;
+  padding:13px 15px;
+  border-radius:13px;
+  font-weight:850;
+  font-size:13px
 }
+.primary{background:var(--orange);color:#fff}
+.light{background:#f2f3f5;color:#222}
+.dark{background:#181818;color:#fff}
+
+.info{
+  margin:15px 16px 0;
+  background:#fff;border:1px solid var(--line);
+  border-radius:17px;padding:14px;
+  font-size:11px;color:#777;line-height:1.5
+}
+
+/* UPLOAD */
+
+.upload{
+  background:#fff;
+  border:2px dashed #ddd;
+  border-radius:20px;
+  padding:27px 16px;
+  text-align:center
+}
+.upload-icon{
+  width:65px;height:65px;border-radius:20px;
+  margin:auto;
+  background:#fff0e9;
+  display:flex;align-items:center;justify-content:center;
+  font-size:31px
+}
+.upload h3{margin:13px 0 5px}
+.upload p{font-size:11px;color:#777;margin:0 0 14px;line-height:1.5}
+
+.progress-wrap{
+  display:none;margin-top:15px;text-align:left
+}
+.progress-wrap.show{display:block}
+.progress-head{
+  display:flex;justify-content:space-between;
+  font-size:11px;font-weight:800
+}
+.progress{
+  height:7px;background:#eee;border-radius:10px;
+  overflow:hidden;margin-top:7px
+}
+.progress i{
+  display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--orange),#ff9b5e);
+  transition:.25s
+}
+
+/* FILE CARDS */
+
+.list{margin-top:14px;display:grid;gap:10px}
+.file-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:11px;
+  display:flex;
+  gap:11px;
+  align-items:center;
+  box-shadow:0 3px 14px #00000005
+}
+.thumb{
+  width:58px;height:66px;
+  border-radius:11px;
+  background:#f1f3f5;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  font-size:27px
+}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.file-info{flex:1;min-width:0}
+.file-name{
+  font-size:13px;font-weight:800;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.file-meta{font-size:10px;color:#888;margin-top:4px}
+.delete{
+  width:32px;height:32px;border-radius:10px;
+  background:#fff0ed;color:#e53e2f;
+  flex-shrink:0
+}
+.open-preview{
+  margin-top:7px;
+  font-size:10px;
+  color:var(--orange);
+  background:none;
+  padding:0;
+  font-weight:800
+}
+
+/* SETTINGS */
+
+.block{
+  background:#fff;border:1px solid var(--line);
+  border-radius:19px;padding:16px;margin-top:13px;
+  box-shadow:var(--shadow)
+}
+.block-title{font-size:14px;font-weight:900;margin-bottom:11px}
+
+.option-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:9px
+}
+.option{
+  background:#fff;border:1px solid #ddd;
+  border-radius:13px;padding:12px 8px;
+  text-align:center;font-size:12px;font-weight:800
+}
+.option small{
+  display:block;color:#888;font-size:10px;
+  margin-top:3px;font-weight:500
+}
+.option.selected{
+  border:2px solid var(--orange);
+  background:#fff5f1;color:var(--orange)
+}
+
+.select{
+  width:100%;padding:13px;
+  border:1px solid #ddd;border-radius:13px;
+  outline:none;background:#fff
+}
+
 .counter{
   display:flex;align-items:center;justify-content:space-between;
-  background:#f7f7f7;border-radius:12px;padding:7px;
+  background:#f5f5f6;border-radius:13px;padding:6px
 }
 .counter button{
-  width:40px;height:40px;border:0;border-radius:10px;background:#fff;font-size:22px;
+  width:40px;height:40px;border-radius:11px;
+  background:#fff;font-size:21px
 }
-.counter strong{font-size:18px}
-.total-box{
-  margin-top:16px;
-  background:#171717;color:#fff;
-  border-radius:17px;padding:17px;
+.counter strong{font-size:17px}
+
+.total{
+  margin-top:13px;
+  background:#181818;color:#fff;
+  border-radius:18px;padding:16px
 }
-.total-row{display:flex;justify-content:space-between;margin:6px 0;font-size:13px}
-.total-row.big{font-size:20px;font-weight:900;border-top:1px solid #444;padding-top:12px;margin-top:12px}
+.row{
+  display:flex;justify-content:space-between;
+  font-size:12px;margin:7px 0
+}
+.row.big{
+  border-top:1px solid #444;
+  padding-top:12px;margin-top:12px;
+  font-size:19px;font-weight:900
+}
+
+/* PHOTO */
+
+.photo-card{
+  background:#fff;border:1px solid var(--line);
+  border-radius:19px;padding:12px;
+  box-shadow:var(--shadow)
+}
+.photo-preview{
+  width:100%;height:180px;
+  background:linear-gradient(135deg,#f2f3f5,#fafafa);
+  border-radius:15px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center
+}
+.photo-preview img{width:100%;height:100%;object-fit:contain}
+.photo-body{padding:12px 2px 2px}
+.photo-name{font-size:13px;font-weight:850}
+.quality{
+  display:inline-flex;margin-top:5px;
+  background:#f1f7ff;color:#3973b8;
+  padding:5px 8px;border-radius:15px;
+  font-size:10px;font-weight:800
+}
+
+/* CART */
+
+.cart-item{
+  background:#fff;border:1px solid var(--line);
+  border-radius:17px;padding:13px;
+  display:flex;gap:11px;margin-bottom:9px
+}
+.cart-icon{
+  width:48px;height:48px;border-radius:13px;
+  background:#fff0e9;display:flex;
+  align-items:center;justify-content:center;font-size:24px
+}
+.cart-main{flex:1}
+.cart-name{font-size:13px;font-weight:850}
+.cart-meta{font-size:10px;color:#777;margin-top:4px;line-height:1.5}
+
+/* FORM */
+
+.field{margin-top:13px}
+.field label{
+  display:block;font-size:11px;
+  font-weight:850;margin-bottom:7px
+}
+.input{
+  width:100%;padding:13px;
+  border:1px solid #ddd;border-radius:13px;
+  outline:none;background:#fff
+}
+.input:focus{border-color:var(--orange)}
+
+.payment-box{
+  margin-top:15px;
+  border:1px solid #cdebd6;
+  background:#f4fff7;
+  border-radius:17px;padding:14px
+}
+.payment-title{font-size:13px;font-weight:900}
+.payment-text{font-size:10px;color:#777;margin-top:4px}
+
+/* CONFIRM */
+
+.success{
+  min-height:100vh;
+  display:flex;align-items:center;
+  justify-content:center;
+  text-align:center;padding:25px
+}
+.success-icon{
+  width:90px;height:90px;border-radius:50%;
+  background:#e8f8ed;color:#18a34a;
+  display:flex;align-items:center;justify-content:center;
+  font-size:43px;margin:0 auto 20px
+}
+.success h1{font-size:25px;margin:0}
+.success p{color:#777;font-size:12px;line-height:1.6}
+
+/* BOTTOM */
+
 .bottom{
-  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-  width:min(620px,100%);
-  background:#fff;border-top:1px solid #ddd;
-  padding:10px 15px;z-index:30;
+  position:fixed;bottom:0;left:50%;
+  transform:translateX(-50%);
+  width:min(520px,100%);
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(15px);
+  border-top:1px solid #ddd;
+  padding:9px 13px;
+  z-index:50
 }
-.bottom-inner{display:flex;justify-content:space-around}
+.navs{display:grid;grid-template-columns:repeat(3,1fr)}
 .nav{
-  background:none;border:0;color:#777;font-size:11px;
+  background:none;color:#777;
+  font-size:10px;font-weight:700;
+  padding:5px
 }
-.nav.active{color:var(--primary);font-weight:800}
+.nav span{display:block;font-size:20px;margin-bottom:2px}
+.nav.active{color:var(--orange)}
+
 .modal{
-  display:none;position:fixed;inset:0;background:#0008;
-  z-index:100;align-items:flex-end;justify-content:center;
+  display:none;position:fixed;inset:0;
+  background:#0008;z-index:100;
+  align-items:flex-end
 }
 .modal.show{display:flex}
 .sheet{
-  width:min(620px,100%);
-  background:#fff;border-radius:25px 25px 0 0;
-  padding:20px;max-height:90vh;overflow:auto;
+  width:min(520px,100%);
+  margin:auto 0 0;
+  background:#fff;
+  border-radius:24px 24px 0 0;
+  padding:19px;
+  max-height:88vh;
+  overflow:auto
 }
-.sheet-head{display:flex;justify-content:space-between;align-items:center}
+.sheet-head{
+  display:flex;justify-content:space-between;
+  align-items:center
+}
 .close{
-  border:0;background:#f2f2f2;width:36px;height:36px;border-radius:50%
+  width:35px;height:35px;
+  border-radius:50%;background:#f2f2f2
 }
-.payment{
-  background:#f5fff7;border:1px solid #ccefd6;
-  border-radius:15px;padding:14px;margin:14px 0;
+.preview-large{
+  background:#f3f3f3;border-radius:17px;
+  padding:10px;margin-top:12px;
+  text-align:center
 }
-.badge{
-  display:inline-block;padding:5px 9px;border-radius:20px;
-  background:#eaf8ee;color:var(--green);font-size:11px;font-weight:800
-}
-.progress{
-  height:7px;background:#eee;border-radius:10px;overflow:hidden;margin-top:10px
-}
-.progress div{height:100%;width:0;background:var(--primary);transition:.25s}
-.hidden{display:none!important}
+.preview-large img{max-width:100%;max-height:420px;border-radius:12px}
+
 .toast{
-  position:fixed;left:50%;bottom:90px;transform:translateX(-50%);
-  background:#222;color:#fff;padding:12px 18px;border-radius:12px;
-  font-size:13px;z-index:200;opacity:0;pointer-events:none;transition:.3s;
+  position:fixed;z-index:200;
+  left:50%;bottom:85px;
+  transform:translateX(-50%);
+  background:#191919;color:#fff;
+  padding:12px 17px;border-radius:12px;
+  font-size:12px;opacity:0;
+  pointer-events:none;transition:.25s
 }
 .toast.show{opacity:1}
-.preview{
-  background:#f2f2f2;border-radius:15px;padding:10px;
-  text-align:center;margin-bottom:12px
+
+.empty{
+  background:#fff;border:1px dashed #ddd;
+  border-radius:18px;padding:25px;
+  text-align:center;color:#777;
+  font-size:12px
 }
-.preview img,.preview iframe{max-width:100%;height:230px;border:0;border-radius:10px;background:#fff}
-.photo-packages{grid-template-columns:repeat(2,1fr)}
-.note{font-size:11px;color:#777;line-height:1.5;margin-top:10px}
-@media(min-width:600px){
-  .grid{grid-template-columns:repeat(3,1fr)}
-}
+
+.hidden{display:none!important}
 </style>
 </head>
 
 <body>
-<div class="app">
 
-<header class="header">
-  <div class="brand">VKL <span>Studios Xerox</span></div>
-  <div class="tagline">24×7 Print • Xerox • Photo Services</div>
-  <div class="search">
-    🔎
-    <input id="search" placeholder="Search print, photo, passport photo...">
+<div id="app">
+
+<!-- HOME -->
+<section id="home" class="screen active">
+
+  <div class="brand">
+    <div class="logo">VKL <span>Studios Xerox</span></div>
+    <div class="tagline">24×7 Print • Xerox • Photo Services</div>
+
+    <div class="search">
+      🔎
+      <input id="searchBox" placeholder="Search print, passport photo...">
+    </div>
   </div>
-</header>
 
-<main>
+  <div class="hero">
+    <h1>Print. Pay. Delivered. 🚀</h1>
+    <p>
+      Upload your files, customise your print,
+      pay online and get your order delivered.
+    </p>
+    <span class="badge">ONLINE PAYMENT</span>
+  </div>
 
-<section class="hero">
-  <h1>Print. Pay. Delivered. 🚀</h1>
-  <p>Upload your documents, choose print settings, pay online and get your prints delivered.</p>
-  <span class="badge">ONLINE PAYMENT ONLY</span>
+  <div class="cards">
+
+    <div class="service">
+      <div class="service-art doc-art">📄</div>
+      <h3>Documents</h3>
+      <p>B&W ₹3/side • Colour ₹10/side<br>A4 • 70 GSM</p>
+      <button class="btn primary" onclick="go('documents')">
+        Upload Files
+      </button>
+    </div>
+
+    <div class="service">
+      <div class="service-art pass-art">📸</div>
+      <h3>Passport Photos</h3>
+      <p>8 / 16 / 24 / 30 copies<br>Glossy Photo Paper • 210 GSM</p>
+      <button class="btn light" onclick="go('passport')">
+        Choose Photos
+      </button>
+    </div>
+
+  </div>
+
+  <div class="info">
+    🔒 Your order moves to printing only after payment confirmation.
+  </div>
+
+  <div class="bottom">
+    <div class="navs">
+      <button class="nav active" onclick="go('home')">
+        <span>⌂</span>Home
+      </button>
+      <button class="nav" onclick="go('documents')">
+        <span>▣</span>Print
+      </button>
+      <button class="nav" onclick="openCart()">
+        <span>🛒</span>Cart
+      </button>
+    </div>
+  </div>
+
 </section>
 
-<section class="grid">
-  <div class="service">
-    <div class="icon">📄</div>
-    <h3>Documents</h3>
-    <p>B&W ₹3/side • Colour ₹10/side</p>
-    <button class="btn primary full" onclick="openDocuments()">Upload Files</button>
-  </div>
 
-  <div class="service">
-    <div class="icon">📸</div>
-    <h3>Passport Photos</h3>
-    <p>8 / 16 / 24 / 30 copies</p>
-    <button class="btn secondary full" onclick="openPhotos()">Choose Photos</button>
-  </div>
+<!-- DOCUMENTS -->
+<section id="documents" class="screen">
 
-  <div class="service">
-    <div class="icon">🖼️</div>
-    <h3>Photo Prints</h3>
-    <p>Upload JPG / PNG and print</p>
-    <button class="btn secondary full" onclick="openPhotos()">Upload Photo</button>
-  </div>
-</section>
-
-<section id="documentsSection" class="section hidden">
-  <div class="section-title">📄 Upload Documents</div>
-
-  <div class="upload-box">
-    <div class="big">☁️</div>
-    <h3>Upload your files</h3>
-    <p>PDF / JPG / PNG • Max 50 MB each • Up to 15 files</p>
-    <button class="btn primary" onclick="document.getElementById('fileInput').click()">
-      Select Files
-    </button>
-    <input id="fileInput" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple hidden>
-    <div class="progress"><div id="progressBar"></div></div>
-  </div>
-
-  <div id="fileList" class="file-list"></div>
-
-  <div id="settingsBox" class="settings hidden">
-
-    <div class="section-title">Print Settings</div>
-
-    <div id="previewBox" class="preview hidden"></div>
-
-    <div class="label">Print Colour</div>
-    <div class="options">
-      <button class="option active" data-color="bw" onclick="setColor('bw',this)">
-        ⚫ B&W
-        <small>₹3 / side</small>
-      </button>
-      <button class="option" data-color="color" onclick="setColor('color',this)">
-        🌈 Colour
-        <small>₹10 / side</small>
-      </button>
-    </div>
-
-    <div class="label">Print Side</div>
-    <div class="options">
-      <button class="option active" onclick="setSide(1,this)">
-        Single Side
-        <small>1 side</small>
-      </button>
-      <button class="option" onclick="setSide(2,this)">
-        Both Side
-        <small>2 sides</small>
-      </button>
-    </div>
-
-    <div class="label">Paper Size</div>
-    <select id="paper">
-      <option value="A4">A4 • 70 GSM</option>
-      <option value="A5">A5</option>
-      <option value="A6">A6</option>
-      <option value="Letter">Letter</option>
-      <option value="Legal">Legal</option>
-    </select>
-
-    <div class="label">Orientation</div>
-    <div class="options">
-      <button class="option active" onclick="setOrientation('Portrait',this)">Portrait</button>
-      <button class="option" onclick="setOrientation('Landscape',this)">Landscape</button>
-    </div>
-
-    <div class="label">Number of Copies</div>
-    <div class="counter">
-      <button onclick="changeCopies(-1)">−</button>
-      <strong id="copies">1</strong>
-      <button onclick="changeCopies(1)">+</button>
-    </div>
-
-    <div class="total-box">
-      <div class="total-row">
-        <span>Pages</span>
-        <strong id="pageCount">0</strong>
-      </div>
-      <div class="total-row">
-        <span>Print charge</span>
-        <strong id="printCharge">₹0</strong>
-      </div>
-      <div class="total-row big">
-        <span>Print Total</span>
-        <strong id="printTotal">₹0</strong>
+  <div class="top">
+    <div class="toprow">
+      <button class="back" onclick="go('home')">‹</button>
+      <div>
+        <div class="title">Print Documents</div>
+        <div class="sub">Upload PDF / JPG / PNG</div>
       </div>
     </div>
-
-    <button class="btn primary full" style="margin-top:12px" onclick="openCheckout()">
-      Continue to Checkout →
-    </button>
-
-  </div>
-</section>
-
-<section id="photoSection" class="section hidden">
-  <div class="section-title">📸 Passport Photo</div>
-
-  <div class="upload-box">
-    <div class="big">📷</div>
-    <h3>Upload one photo</h3>
-    <p>JPG / PNG</p>
-    <button class="btn primary" onclick="document.getElementById('photoInput').click()">
-      Select Photo
-    </button>
-    <input id="photoInput" type="file" accept="image/*" hidden>
   </div>
 
-  <div id="photoPreview" class="preview hidden"></div>
+  <div class="content">
 
-  <div id="photoSettings" class="settings hidden">
-
-    <div class="label">Paper Size</div>
-    <div class="options">
-      <button class="option active" onclick="setPhotoPaper('4R',this)">4R</button>
-      <button class="option" onclick="setPhotoPaper('5R',this)">5R</button>
-      <button class="option" onclick="setPhotoPaper('6R',this)">6R</button>
-      <button class="option" onclick="setPhotoPaper('8R',this)">8R</button>
-      <button class="option" onclick="setPhotoPaper('A5',this)">A5</button>
-      <button class="option" onclick="setPhotoPaper('A6',this)">A6</button>
-      <button class="option" onclick="setPhotoPaper('A4',this)">A4</button>
-    </div>
-
-    <div class="label">Photo Package</div>
-    <div class="options photo-packages">
-      <button class="option active" onclick="setPackage(8,100,this)">
-        8 Photos<small>₹100</small>
-      </button>
-      <button class="option" onclick="setPackage(16,150,this)">
-        16 Photos<small>₹150</small>
-      </button>
-      <button class="option" onclick="setPackage(24,200,this)">
-        24 Photos<small>₹200</small>
-      </button>
-      <button class="option" onclick="setPackage(30,250,this)">
-        30 Photos<small>₹250</small>
-      </button>
-    </div>
-
-    <div class="total-box">
-      <div class="total-row">
-        <span>Package</span>
-        <strong id="photoQty">8 Photos</strong>
-      </div>
-      <div class="total-row">
-        <span>Paper</span>
-        <strong id="photoPaperText">4R</strong>
-      </div>
-      <div class="total-row big">
-        <span>Photo Total</span>
-        <strong id="photoTotal">₹100</strong>
-      </div>
-    </div>
-
-    <button class="btn primary full" style="margin-top:12px" onclick="openPhotoCheckout()">
-      Continue to Checkout →
-    </button>
-  </div>
-</section>
-
-</main>
-
-<div class="bottom">
-  <div class="bottom-inner">
-    <button class="nav active" onclick="scrollTopPage()">🏠<br>Home</button>
-    <button class="nav" onclick="openDocuments()">📄<br>Print</button>
-    <button class="nav" onclick="openPhotos()">📸<br>Photos</button>
-    <button class="nav" onclick="openCheckout()">🛒<br>Checkout</button>
-  </div>
-</div>
-
-</div>
-
-<!-- CHECKOUT -->
-<div id="checkoutModal" class="modal">
-  <div class="sheet">
-
-    <div class="sheet-head">
-      <h2>Checkout</h2>
-      <button class="close" onclick="closeModal('checkoutModal')">✕</button>
-    </div>
-
-    <div id="checkoutSummary"></div>
-
-    <div class="label">Customer Name</div>
-    <input id="customerName" class="text" placeholder="Enter your name">
-
-    <div class="label">Mobile Number</div>
-    <input id="customerPhone" class="text" type="tel" maxlength="10" placeholder="10 digit mobile number">
-
-    <div class="label">Delivery Address</div>
-    <input id="customerAddress" class="text" placeholder="Enter delivery address">
-
-    <div class="label">Delivery Distance</div>
-    <select id="distance" onchange="updateCheckoutTotal()">
-      <option value="20">0–2 km • ₹20</option>
-      <option value="30">2–5 km • ₹30</option>
-      <option value="40">5–8 km • ₹40</option>
-      <option value="50">8–12 km • ₹50</option>
-    </select>
-
-    <div class="payment">
-      <strong>🔐 Online Payment Only</strong>
-      <p style="font-size:12px;color:#666;margin-bottom:0">
-        Payment confirmation is required before the order enters the print queue.
+    <div class="upload">
+      <div class="upload-icon">☁️</div>
+      <h3>Upload your files</h3>
+      <p>
+        Select multiple files together.<br>
+        PDF / JPG / PNG • Up to 15 files • 50 MB each
       </p>
+
+      <button class="btn primary"
+        onclick="document.getElementById('docInput').click()">
+        Select Files
+      </button>
+
+      <input id="docInput"
+        type="file"
+        accept=".pdf,.jpg,.jpeg,.png"
+        multiple
+        hidden>
+
+      <div id="docProgress" class="progress-wrap">
+        <div class="progress-head">
+          <span id="progressText">Uploading...</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress">
+          <i id="progressBar"></i>
+        </div>
+      </div>
     </div>
 
-    <div class="total-box">
-      <div class="total-row">
-        <span>Print / Photo</span>
-        <strong id="checkoutPrint">₹0</strong>
+    <div id="documentList" class="list"></div>
+
+    <button id="documentContinue"
+      class="btn primary hidden"
+      style="margin-top:14px"
+      onclick="go('printSettings')">
+      Continue to Print Settings →
+    </button>
+
+  </div>
+
+  <div class="bottom">
+    <div class="navs">
+      <button class="nav" onclick="go('home')"><span>⌂</span>Home</button>
+      <button class="nav active"><span>▣</span>Print</button>
+      <button class="nav" onclick="openCart()"><span>🛒</span>Cart</button>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- PRINT SETTINGS -->
+<section id="printSettings" class="screen">
+
+  <div class="top">
+    <div class="toprow">
+      <button class="back" onclick="go('documents')">‹</button>
+      <div>
+        <div class="title">Print Settings</div>
+        <div class="sub">Customise your documents</div>
       </div>
-      <div class="total-row">
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div id="settingsPreview" class="list"></div>
+
+    <div class="block">
+      <div class="block-title">Print Colour</div>
+
+      <div class="option-grid">
+        <button class="option selected"
+          onclick="choosePrint('colour','bw',this)">
+          ⚫ B&W
+          <small>₹3 / side</small>
+        </button>
+
+        <button class="option"
+          onclick="choosePrint('colour','color',this)">
+          🌈 Colour
+          <small>₹10 / side</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title">Print Side</div>
+
+      <div class="option-grid">
+        <button class="option selected"
+          onclick="choosePrint('side',1,this)">
+          Single Side
+          <small>1 side</small>
+        </button>
+
+        <button class="option"
+          onclick="choosePrint('side',2,this)">
+          Both Side
+          <small>2 sides</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title">Paper</div>
+
+      <select id="paperSize" class="select">
+        <option>A4 • 70 GSM</option>
+      </select>
+    </div>
+
+    <div class="block">
+      <div class="block-title">Orientation</div>
+
+      <div class="option-grid">
+        <button class="option selected"
+          onclick="choosePrint('orientation','Portrait',this)">
+          Portrait
+          <small>A4 Portrait</small>
+        </button>
+
+        <button class="option"
+          onclick="choosePrint('orientation','Landscape',this)">
+          Landscape
+          <small>A4 Landscape</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title">Number of Copies</div>
+
+      <div class="counter">
+        <button onclick="changeCopies(-1)">−</button>
+        <strong id="copiesValue">1</strong>
+        <button onclick="changeCopies(1)">+</button>
+      </div>
+    </div>
+
+    <div class="total">
+      <div class="row">
+        <span>Total Pages</span>
+        <strong id="settingsPages">0</strong>
+      </div>
+
+      <div class="row">
+        <span>Print Charge</span>
+        <strong id="settingsPrint">₹0</strong>
+      </div>
+
+      <div class="row big">
+        <span>Total</span>
+        <strong id="settingsTotal">₹0</strong>
+      </div>
+    </div>
+
+    <button class="btn primary"
+      style="margin-top:13px"
+      onclick="addDocumentsToCart()">
+      Add to Cart →
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- PASSPORT -->
+<section id="passport" class="screen">
+
+  <div class="top">
+    <div class="toprow">
+      <button class="back" onclick="go('home')">‹</button>
+      <div>
+        <div class="title">Passport Photos</div>
+        <div class="sub">Glossy Photo Paper • 210 GSM</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="upload">
+      <div class="upload-icon">📸</div>
+      <h3>Upload Photos</h3>
+      <p>
+        You can select multiple photos.<br>
+        Each photo can have its own copy package.
+      </p>
+
+      <button class="btn primary"
+        onclick="document.getElementById('photoInput').click()">
+        Select Photos
+      </button>
+
+      <input id="photoInput"
+        type="file"
+        accept="image/*"
+        multiple
+        hidden>
+    </div>
+
+    <div id="photoList" class="list"></div>
+
+    <button id="photoContinue"
+      class="btn primary hidden"
+      style="margin-top:14px"
+      onclick="addPhotosToCart()">
+      Add Photos to Cart →
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- CART -->
+<section id="cart" class="screen">
+
+  <div class="top">
+    <div class="toprow">
+      <button class="back" onclick="go('home')">‹</button>
+      <div>
+        <div class="title">Your Cart</div>
+        <div class="sub">Review your order</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div id="cartList"></div>
+
+    <div id="cartEmpty" class="empty">
+      🛒<br><br>
+      Your cart is empty.
+    </div>
+
+    <div id="cartTotalBox" class="total hidden">
+      <div class="row">
+        <span>Print / Photo</span>
+        <strong id="cartItemsTotal">₹0</strong>
+      </div>
+
+      <div class="row">
         <span>Handling</span>
         <strong>₹10</strong>
       </div>
-      <div class="total-row">
-        <span>Delivery</span>
-        <strong id="deliveryCharge">₹20</strong>
-      </div>
-      <div class="total-row big">
-        <span>Grand Total</span>
-        <strong id="grandTotal">₹30</strong>
+
+      <div class="row big">
+        <span>Subtotal</span>
+        <strong id="cartSubtotal">₹10</strong>
       </div>
     </div>
 
-    <button class="btn primary full" style="margin-top:14px" onclick="startPayment()">
-      Pay Online & Place Order →
+    <button id="checkoutButton"
+      class="btn primary hidden"
+      style="margin-top:13px"
+      onclick="goCheckout()">
+      Continue to Checkout →
     </button>
 
-    <p class="note">
-      Payment gateway will be connected to the live UPI/payment system in the next backend step.
-      This screen does not fake payment success.
-    </p>
-
   </div>
-</div>
 
-<!-- PAYMENT INFO -->
-<div id="paymentModal" class="modal">
-  <div class="sheet">
-    <div class="sheet-head">
-      <h2>Payment</h2>
-      <button class="close" onclick="closeModal('paymentModal')">✕</button>
+</section>
+
+
+<!-- CHECKOUT -->
+<section id="checkout" class="screen">
+
+  <div class="top">
+    <div class="toprow">
+      <button class="back" onclick="go('cart')">‹</button>
+      <div>
+        <div class="title">Checkout</div>
+        <div class="sub">Delivery details</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div id="checkoutItems"></div>
+
+    <div class="block">
+
+      <div class="block-title">Customer Details</div>
+
+      <div class="field">
+        <label>Customer Name</label>
+        <input id="customerName"
+          class="input"
+          placeholder="Enter your name">
+      </div>
+
+      <div class="field">
+        <label>Mobile Number</label>
+        <input id="customerPhone"
+          class="input"
+          maxlength="10"
+          inputmode="numeric"
+          placeholder="10 digit mobile number">
+      </div>
+
+      <div class="field">
+        <label>Delivery Address</label>
+        <input id="customerAddress"
+          class="input"
+          placeholder="Enter delivery address">
+      </div>
+
+      <div class="field">
+        <label>Delivery Distance</label>
+        <select id="deliveryDistance"
+          class="select"
+          onchange="updateCheckout()">
+          <option value="20">0–2 km • ₹20</option>
+          <option value="30">2–5 km • ₹30</option>
+          <option value="40">5–8 km • ₹40</option>
+          <option value="50">8–12 km • ₹50</option>
+        </select>
+      </div>
+
     </div>
 
-    <div style="text-align:center;padding:20px 5px">
-      <div style="font-size:55px">💳</div>
-      <h3>UPI Payment</h3>
-      <p style="color:#666;font-size:13px">
-        Google Pay / PhonePe / other UPI apps will be connected here.
-      </p>
+    <div class="payment-box">
+      <div class="payment-title">🔐 Online Payment Only</div>
+      <div class="payment-text">
+        Payment confirmation is required before the order enters the print queue.
+      </div>
+    </div>
 
-      <div class="total-box">
-        <div class="total-row big">
+    <div class="total">
+
+      <div class="row">
+        <span>Items</span>
+        <strong id="checkoutItemsTotal">₹0</strong>
+      </div>
+
+      <div class="row">
+        <span>Handling</span>
+        <strong>₹10</strong>
+      </div>
+
+      <div class="row">
+        <span>Delivery</span>
+        <strong id="checkoutDelivery">₹20</strong>
+      </div>
+
+      <div class="row big">
+        <span>Grand Total</span>
+        <strong id="checkoutGrand">₹30</strong>
+      </div>
+
+    </div>
+
+    <button class="btn primary"
+      style="margin-top:13px"
+      onclick="startPayment()">
+      Pay Online →
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- PAYMENT -->
+<section id="payment" class="screen">
+
+  <div class="top">
+    <div class="toprow">
+      <button class="back" onclick="go('checkout')">‹</button>
+      <div>
+        <div class="title">Payment</div>
+        <div class="sub">Secure online payment</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="hero" style="margin:0 0 14px">
+      <h1>Pay securely 💳</h1>
+      <p>
+        Google Pay / PhonePe / UPI payment gateway
+        will be connected here.
+      </p>
+    </div>
+
+    <div class="block">
+
+      <div class="block-title">Payment Amount</div>
+
+      <div class="total" style="margin-top:0">
+        <div class="row big" style="border:0;padding:0;margin:0">
           <span>Pay</span>
           <strong id="paymentAmount">₹0</strong>
         </div>
       </div>
 
-      <button class="btn secondary full" style="margin-top:12px" onclick="closeModal('paymentModal')">
-        Close
+      <div style="height:12px"></div>
+
+      <button class="btn light" onclick="go('checkout')">
+        ← Back to Checkout
       </button>
+
+      <p style="font-size:10px;color:#888;line-height:1.5;margin-top:13px">
+        This is the payment interface for the current prototype.
+        Live UPI gateway credentials will be connected in the backend stage.
+      </p>
+
     </div>
+
   </div>
+
+</section>
+
+
+<!-- ORDER CONFIRMED -->
+<section id="confirmed" class="screen">
+
+  <div class="success">
+
+    <div>
+
+      <div class="success-icon">✓</div>
+
+      <h1>Order Confirmed!</h1>
+
+      <p>
+        Your order has been received successfully.<br>
+        After payment confirmation, it will move to the print queue.
+      </p>
+
+      <div class="block" style="text-align:left;margin-top:20px">
+        <div class="row">
+          <span>Order Number</span>
+          <strong id="orderNumber">VKL0001</strong>
+        </div>
+
+        <div class="row">
+          <span>Status</span>
+          <strong style="color:#16a34a">Payment Pending</strong>
+        </div>
+      </div>
+
+      <button class="btn primary"
+        style="margin-top:14px"
+        onclick="go('home')">
+        Back to Home
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
 </div>
 
 <div id="toast" class="toast"></div>
 
+
 <script>
-/* =========================
+
+/* ================================
    VKL STUDIOS XEROX
-   FRONT-END VERSION
-========================= */
+   MOBILE PRINT STORE
+================================ */
 
 const state={
-  files:[],
+  documents:[],
+  photos:[],
+  cart:[],
   color:"bw",
   sides:1,
-  copies:1,
   orientation:"Portrait",
-  paper:"A4",
-  photoFile:null,
-  photoPaper:"4R",
-  photoQty:8,
-  photoPrice:100,
-  currentType:"document"
+  copies:1
 };
 
-const BW_RATE=3;
-const COLOR_RATE=10;
+const RATES={
+  bw:3,
+  color:10
+};
+
 const HANDLING=10;
 
-/* ---------- UTIL ---------- */
 
-function money(n){
-  return "₹"+Number(n).toFixed(0);
+/* ---------- SCREEN ---------- */
+
+function go(id){
+
+  document.querySelectorAll(".screen")
+    .forEach(x=>x.classList.remove("active"));
+
+  const screen=document.getElementById(id);
+
+  if(screen){
+    screen.classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  if(id==="printSettings") renderSettings();
+  if(id==="cart") renderCart();
+  if(id==="checkout") renderCheckout();
 }
 
-function toast(msg){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),2200);
+
+/* ---------- TOAST ---------- */
+
+function toast(message){
+
+  const box=document.getElementById("toast");
+
+  box.textContent=message;
+  box.classList.add("show");
+
+  setTimeout(()=>{
+    box.classList.remove("show");
+  },2200);
 }
 
-function openDocuments(){
-  document.getElementById("documentsSection").classList.remove("hidden");
-  document.getElementById("photoSection").classList.add("hidden");
-  state.currentType="document";
-  document.getElementById("documentsSection").scrollIntoView({behavior:"smooth"});
-}
-
-function openPhotos(){
-  document.getElementById("photoSection").classList.remove("hidden");
-  document.getElementById("documentsSection").classList.add("hidden");
-  state.currentType="photo";
-  document.getElementById("photoSection").scrollIntoView({behavior:"smooth"});
-}
-
-function scrollTopPage(){
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function closeModal(id){
-  document.getElementById(id).classList.remove("show");
-}
 
 /* ---------- DOCUMENT UPLOAD ---------- */
 
-document.getElementById("fileInput").addEventListener("change",async e=>{
-  const selected=[...e.target.files];
+document.getElementById("docInput")
+.addEventListener("change",function(e){
 
-  if(selected.length+state.files.length>15){
+  const files=[...e.target.files];
+
+  if(files.length+state.documents.length>15){
     toast("Maximum 15 files allowed");
     return;
   }
 
-  for(const file of selected){
+  const progress=document.getElementById("docProgress");
+  const bar=document.getElementById("progressBar");
+  const percent=document.getElementById("progressPercent");
+  const text=document.getElementById("progressText");
+
+  progress.classList.add("show");
+
+  let value=0;
+
+  const timer=setInterval(()=>{
+
+    value+=10;
+
+    bar.style.width=value+"%";
+    percent.textContent=value+"%";
+
+    if(value<100){
+      text.textContent="Uploading files...";
+    }else{
+      text.textContent="Upload complete ✓";
+      clearInterval(timer);
+
+      setTimeout(()=>{
+        progress.classList.remove("show");
+        bar.style.width="0%";
+      },700);
+    }
+
+  },55);
+
+
+  files.forEach(file=>{
+
     if(file.size>50*1024*1024){
       toast(file.name+" is above 50 MB");
-      continue;
+      return;
     }
 
-    let pages=1;
-
-    if(file.type==="application/pdf"){
-      pages=await getPdfPages(file);
-    }
-
-    state.files.push({
-      file,
+    state.documents.push({
+      id:Date.now()+Math.random(),
+      file:file,
       name:file.name,
-      size:file.size,
-      pages
+      pages:getPages(file),
+      url:file.type.startsWith("image/")
+        ?URL.createObjectURL(file)
+        :null
     });
-  }
 
-  renderFiles();
-  updatePrintTotal();
+  });
+
+  renderDocuments();
 
   e.target.value="";
 });
 
-async function getPdfPages(file){
-  /*
-    PDF page count.
-    Uses PDF.js from CDN.
-    If unavailable, falls back to 1.
-  */
 
-  try{
-    if(!window.pdfjsLib){
-      await loadPdfJs();
-    }
+function getPages(file){
 
-    const buffer=await file.arrayBuffer();
-    const pdf=await pdfjsLib.getDocument({data:buffer}).promise;
-    return pdf.numPages;
-  }catch(e){
+  if(file.type==="application/pdf"){
+
+    /*
+      Lightweight PDF page estimation for prototype.
+      Backend will use a proper PDF parser.
+    */
+
     return 1;
   }
+
+  return 1;
 }
 
-function loadPdfJs(){
-  return new Promise((resolve,reject)=>{
-    if(window.pdfjsLib)return resolve();
 
-    const s=document.createElement("script");
-    s.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
-    s.type="module";
+/* ---------- DOCUMENT LIST ---------- */
 
-    s.onload=()=>{
-      setTimeout(()=>resolve(),300);
-    };
+function renderDocuments(){
 
-    s.onerror=reject;
-    document.head.appendChild(s);
-  });
-}
+  const list=document.getElementById("documentList");
 
-function renderFiles(){
-  const box=document.getElementById("fileList");
+  if(!state.documents.length){
 
-  if(!state.files.length){
-    box.innerHTML="";
-    document.getElementById("settingsBox").classList.add("hidden");
+    list.innerHTML="";
+    document.getElementById("documentContinue")
+      .classList.add("hidden");
+
     return;
   }
 
-  box.innerHTML=state.files.map((f,i)=>`
-    <div class="file">
-      <div class="file-icon">${f.file.type==="application/pdf"?"📄":"🖼️"}</div>
-      <div class="file-info">
-        <div class="file-name">${escapeHtml(f.name)}</div>
-        <div class="file-meta">${f.pages} page${f.pages>1?"s":""} • ${formatSize(f.size)}</div>
+  list.innerHTML=state.documents.map((item,index)=>`
+
+    <div class="file-card">
+
+      <div class="thumb">
+
+        ${
+          item.url
+          ? `<img src="${item.url}" alt="">`
+          : "📄"
+        }
+
       </div>
-      <button class="remove" onclick="removeFile(${i})">✕</button>
+
+      <div class="file-info">
+
+        <div class="file-name">
+          ${escapeHtml(item.name)}
+        </div>
+
+        <div class="file-meta">
+          ${item.pages} page • A4 • 70 GSM
+        </div>
+
+        <button class="open-preview"
+          onclick="openFilePreview(${index})">
+          View preview
+        </button>
+
+      </div>
+
+      <button class="delete"
+        onclick="deleteDocument(${index})">
+        🗑
+      </button>
+
     </div>
+
   `).join("");
 
-  document.getElementById("settingsBox").classList.remove("hidden");
-
-  const first=state.files[0];
-  showPreview(first);
+  document.getElementById("documentContinue")
+    .classList.remove("hidden");
 }
 
-function removeFile(i){
-  state.files.splice(i,1);
-  renderFiles();
-  updatePrintTotal();
-}
 
-function formatSize(bytes){
-  if(bytes<1024)return bytes+" B";
-  if(bytes<1024*1024)return (bytes/1024).toFixed(1)+" KB";
-  return (bytes/1024/1024).toFixed(1)+" MB";
-}
+function deleteDocument(index){
 
-function escapeHtml(str){
-  return str.replace(/[&<>"']/g,m=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
-  }[m]));
-}
+  const item=state.documents[index];
 
-/* ---------- PREVIEW ---------- */
-
-function showPreview(item){
-  const box=document.getElementById("previewBox");
-  box.classList.remove("hidden");
-
-  if(item.file.type.startsWith("image/")){
-    const url=URL.createObjectURL(item.file);
-
-    box.innerHTML=`
-      <img src="${url}" alt="Preview">
-      <div style="font-size:11px;color:#777;margin-top:5px">
-        Preview • ${item.pages} page
-      </div>
-    `;
-  }else{
-    box.innerHTML=`
-      <div style="font-size:45px">📄</div>
-      <strong>${escapeHtml(item.name)}</strong>
-      <div style="font-size:11px;color:#777;margin-top:5px">
-        PDF Preview • ${item.pages} pages
-      </div>
-    `;
+  if(item.url){
+    URL.revokeObjectURL(item.url);
   }
+
+  state.documents.splice(index,1);
+
+  renderDocuments();
+
+  toast("File removed");
 }
+
+
+/* ---------- FILE PREVIEW ---------- */
+
+function openFilePreview(index){
+
+  const item=state.documents[index];
+
+  const modal=document.createElement("div");
+
+  modal.className="modal show";
+
+  modal.innerHTML=`
+
+    <div class="sheet">
+
+      <div class="sheet-head">
+
+        <div>
+          <strong>${escapeHtml(item.name)}</strong>
+          <div style="font-size:10px;color:#777">
+            ${item.pages} page
+          </div>
+        </div>
+
+        <button class="close"
+          onclick="this.closest('.modal').remove()">
+          ✕
+        </button>
+
+      </div>
+
+      <div class="preview-large">
+
+        ${
+          item.url
+          ? `<img src="${item.url}" alt="Preview">`
+          : `<div style="font-size:70px;padding:50px 0">📄</div>
+             <div style="font-size:11px;color:#777">
+             PDF preview will be rendered here
+             </div>`
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+}
+
 
 /* ---------- PRINT SETTINGS ---------- */
 
-function setColor(value,btn){
-  state.color=value;
-  activateOption(btn);
+function choosePrint(type,value,button){
+
+  const parent=button.parentElement;
+
+  [...parent.children]
+    .forEach(x=>x.classList.remove("selected"));
+
+  button.classList.add("selected");
+
+  if(type==="colour"){
+    state.color=value;
+  }
+
+  if(type==="side"){
+    state.sides=value;
+  }
+
+  if(type==="orientation"){
+    state.orientation=value;
+  }
+
   updatePrintTotal();
 }
 
-function setSide(value,btn){
-  state.sides=value;
-  activateOption(btn);
+
+function changeCopies(amount){
+
+  state.copies=Math.max(
+    1,
+    Math.min(99,state.copies+amount)
+  );
+
+  document.getElementById("copiesValue")
+    .textContent=state.copies;
+
   updatePrintTotal();
 }
 
-function setOrientation(value,btn){
-  state.orientation=value;
-  activateOption(btn);
-}
-
-function activateOption(btn){
-  const parent=btn.parentElement;
-  [...parent.children].forEach(x=>x.classList.remove("active"));
-  btn.classList.add("active");
-}
-
-function changeCopies(n){
-  state.copies=Math.max(1,Math.min(99,state.copies+n));
-  document.getElementById("copies").textContent=state.copies;
-  updatePrintTotal();
-}
 
 function totalPages(){
-  return state.files.reduce((sum,f)=>sum+f.pages,0);
+
+  return state.documents.reduce(
+    (sum,item)=>sum+item.pages,
+    0
+  );
 }
 
-function calculatePrintCharge(){
-  const pages=totalPages();
-  const rate=state.color==="bw"?BW_RATE:COLOR_RATE;
 
-  /*
-    Rate is per printed side.
-    Single side = 1 side.
-    Both side = 2 sides.
-  */
-  return pages*rate*state.sides*state.copies;
+function printTotal(){
+
+  return totalPages()
+    * RATES[state.color]
+    * state.sides
+    * state.copies;
 }
+
 
 function updatePrintTotal(){
-  const pages=totalPages();
-  const charge=calculatePrintCharge();
 
-  document.getElementById("pageCount").textContent=pages;
-  document.getElementById("printCharge").textContent=money(charge);
-  document.getElementById("printTotal").textContent=money(charge);
+  document.getElementById("settingsPages")
+    .textContent=totalPages();
+
+  document.getElementById("settingsPrint")
+    .textContent=money(printTotal());
+
+  document.getElementById("settingsTotal")
+    .textContent=money(printTotal());
 }
 
-/* ---------- PHOTO ---------- */
 
-document.getElementById("photoInput").addEventListener("change",e=>{
-  const file=e.target.files[0];
-  if(!file)return;
+function renderSettings(){
 
-  state.photoFile=file;
+  const box=document.getElementById("settingsPreview");
 
-  const box=document.getElementById("photoPreview");
-  const url=URL.createObjectURL(file);
+  box.innerHTML=state.documents.map((item,index)=>`
 
-  box.classList.remove("hidden");
-  box.innerHTML=`
-    <img src="${url}" alt="Passport photo preview">
-    <div style="font-size:11px;color:#777;margin-top:5px">
-      Photo uploaded successfully
+    <div class="file-card">
+
+      <div class="thumb">
+        ${
+          item.url
+          ? `<img src="${item.url}" alt="">`
+          : "📄"
+        }
+      </div>
+
+      <div class="file-info">
+
+        <div class="file-name">
+          ${escapeHtml(item.name)}
+        </div>
+
+        <div class="file-meta">
+          ${item.pages} page
+        </div>
+
+      </div>
+
+      <button class="delete"
+        onclick="deleteDocumentFromSettings(${index})">
+        🗑
+      </button>
+
     </div>
-  `;
 
-  document.getElementById("photoSettings").classList.remove("hidden");
+  `).join("");
+
+  document.getElementById("copiesValue")
+    .textContent=state.copies;
+
+  updatePrintTotal();
+}
+
+
+function deleteDocumentFromSettings(index){
+
+  state.documents.splice(index,1);
+
+  if(!state.documents.length){
+    go("documents");
+    toast("All files removed");
+    return;
+  }
+
+  renderSettings();
+}
+
+
+/* ---------- ADD DOCUMENTS ---------- */
+
+function addDocumentsToCart(){
+
+  if(!state.documents.length){
+    toast("No documents selected");
+    return;
+  }
+
+  state.cart=state.cart.filter(
+    item=>item.type!=="document"
+  );
+
+  state.cart.push({
+    id:"documents",
+    type:"document",
+    name:"Document Print",
+    meta:
+      `${state.documents.length} files • `
+      +`${totalPages()} pages • `
+      +`${state.color==="bw"?"B&W":"Colour"} • `
+      +`${state.sides===1?"Single Side":"Both Side"} • `
+      +`${state.orientation}`,
+    price:printTotal()
+  });
+
+  toast("Documents added to cart");
+
+  setTimeout(()=>go("cart"),400);
+}
+
+
+/* ---------- PASSPORT PHOTOS ---------- */
+
+document.getElementById("photoInput")
+.addEventListener("change",function(e){
+
+  const files=[...e.target.files];
+
+  files.forEach(file=>{
+
+    state.photos.push({
+      id:Date.now()+Math.random(),
+      file:file,
+      name:file.name,
+      url:URL.createObjectURL(file),
+      qty:8,
+      price:100
+    });
+
+  });
+
+  renderPhotos();
+
   e.target.value="";
 });
 
-function setPhotoPaper(value,btn){
-  state.photoPaper=value;
-  activateOption(btn);
 
-  document.getElementById("photoPaperText").textContent=value;
+function renderPhotos(){
 
-  /*
-    Photo capacity is calculated by the system configuration.
-    4R is fixed to the business requirement of 8.
-  */
-  updatePhotoInfo();
+  const list=document.getElementById("photoList");
+
+  if(!state.photos.length){
+
+    list.innerHTML="";
+
+    document.getElementById("photoContinue")
+      .classList.add("hidden");
+
+    return;
+  }
+
+  list.innerHTML=state.photos.map((photo,index)=>`
+
+    <div class="photo-card">
+
+      <div class="photo-preview">
+        <img src="${photo.url}" alt="">
+      </div>
+
+      <div class="photo-body">
+
+        <div style="display:flex;justify-content:space-between;gap:10px">
+
+          <div>
+            <div class="photo-name">
+              ${escapeHtml(photo.name)}
+            </div>
+
+            <div class="quality">
+              Glossy Photo Paper • 210 GSM
+            </div>
+          </div>
+
+          <button class="delete"
+            onclick="deletePhoto(${index})">
+            🗑
+          </button>
+
+        </div>
+
+        <div class="block"
+          style="margin-top:12px;padding:12px;box-shadow:none">
+
+          <div class="block-title">
+            Number of Copies
+          </div>
+
+          <div class="option-grid">
+
+            <button class="option ${photo.qty===8?"selected":""}"
+              onclick="setPhotoPackage(${index},8,100)">
+              8 Copies
+              <small>₹100</small>
+            </button>
+
+            <button class="option ${photo.qty===16?"selected":""}"
+              onclick="setPhotoPackage(${index},16,150)">
+              16 Copies
+              <small>₹150</small>
+            </button>
+
+            <button class="option ${photo.qty===24?"selected":""}"
+              onclick="setPhotoPackage(${index},24,200)">
+              24 Copies
+              <small>₹200</small>
+            </button>
+
+            <button class="option ${photo.qty===30?"selected":""}"
+              onclick="setPhotoPackage(${index},30,250)">
+              30 Copies
+              <small>₹250</small>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+  document.getElementById("photoContinue")
+    .classList.remove("hidden");
 }
 
-function setPackage(qty,price,btn){
-  state.photoQty=qty;
-  state.photoPrice=price;
 
-  activateOption(btn);
-  updatePhotoInfo();
+function setPhotoPackage(index,qty,price){
+
+  state.photos[index].qty=qty;
+  state.photos[index].price=price;
+
+  renderPhotos();
 }
 
-function updatePhotoInfo(){
-  document.getElementById("photoQty").textContent=state.photoQty+" Photos";
-  document.getElementById("photoPaperText").textContent=state.photoPaper;
-  document.getElementById("photoTotal").textContent=money(state.photoPrice);
+
+function deletePhoto(index){
+
+  URL.revokeObjectURL(state.photos[index].url);
+
+  state.photos.splice(index,1);
+
+  renderPhotos();
+
+  toast("Photo removed");
 }
+
+
+/* ---------- PHOTO CART ---------- */
+
+function addPhotosToCart(){
+
+  if(!state.photos.length){
+    toast("No photos selected");
+    return;
+  }
+
+  state.cart=state.cart.filter(
+    item=>item.type!=="photo"
+  );
+
+  state.photos.forEach((photo,index)=>{
+
+    state.cart.push({
+
+      id:"photo-"+photo.id,
+
+      type:"photo",
+
+      name:"Passport Photo "+(index+1),
+
+      meta:
+        `${photo.qty} copies • `
+        +"Glossy Photo Paper • 210 GSM",
+
+      price:photo.price
+
+    });
+
+  });
+
+  toast("Photos added to cart");
+
+  setTimeout(()=>go("cart"),400);
+}
+
+
+/* ---------- CART ---------- */
+
+function renderCart(){
+
+  const list=document.getElementById("cartList");
+
+  if(!state.cart.length){
+
+    list.innerHTML="";
+
+    document.getElementById("cartEmpty")
+      .classList.remove("hidden");
+
+    document.getElementById("cartTotalBox")
+      .classList.add("hidden");
+
+    document.getElementById("checkoutButton")
+      .classList.add("hidden");
+
+    return;
+  }
+
+  document.getElementById("cartEmpty")
+    .classList.add("hidden");
+
+  list.innerHTML=state.cart.map((item,index)=>`
+
+    <div class="cart-item">
+
+      <div class="cart-icon">
+        ${item.type==="photo"?"📸":"📄"}
+      </div>
+
+      <div class="cart-main">
+
+        <div class="cart-name">
+          ${item.name}
+        </div>
+
+        <div class="cart-meta">
+          ${item.meta}
+        </div>
+
+        <div style="margin-top:7px;font-weight:900">
+          ${money(item.price)}
+        </div>
+
+      </div>
+
+      <button class="delete"
+        onclick="removeCartItem(${index})">
+        🗑
+      </button>
+
+    </div>
+
+  `).join("");
+
+  const total=cartItemsTotal();
+
+  document.getElementById("cartItemsTotal")
+    .textContent=money(total);
+
+  document.getElementById("cartSubtotal")
+    .textContent=money(total+HANDLING);
+
+  document.getElementById("cartTotalBox")
+    .classList.remove("hidden");
+
+  document.getElementById("checkoutButton")
+    .classList.remove("hidden");
+}
+
+
+function removeCartItem(index){
+
+  state.cart.splice(index,1);
+
+  renderCart();
+
+  toast("Item removed");
+}
+
+
+function cartItemsTotal(){
+
+  return state.cart.reduce(
+    (sum,item)=>sum+item.price,
+    0
+  );
+}
+
+
+function openCart(){
+
+  go("cart");
+}
+
 
 /* ---------- CHECKOUT ---------- */
 
-function openCheckout(){
-  if(state.currentType==="photo"){
-    openPhotoCheckout();
+function goCheckout(){
+
+  if(!state.cart.length){
+    toast("Your cart is empty");
     return;
   }
 
-  if(!state.files.length){
-    toast("First upload a document");
-    openDocuments();
-    return;
-  }
-
-  buildCheckout("document");
-  document.getElementById("checkoutModal").classList.add("show");
+  go("checkout");
 }
 
-function openPhotoCheckout(){
-  if(!state.photoFile){
-    toast("First upload a photo");
-    openPhotos();
-    return;
-  }
 
-  buildCheckout("photo");
-  document.getElementById("checkoutModal").classList.add("show");
-}
+function renderCheckout(){
 
-function buildCheckout(type){
-  let base=0;
-  let description="";
+  const box=document.getElementById("checkoutItems");
 
-  if(type==="document"){
-    base=calculatePrintCharge();
+  box.innerHTML=state.cart.map(item=>`
 
-    description=`
-      <div class="file" style="margin-top:10px">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-          <div class="file-name">Document Order</div>
-          <div class="file-meta">
-            ${totalPages()} pages •
-            ${state.color==="bw"?"B&W":"Colour"} •
-            ${state.sides===1?"Single Side":"Both Side"} •
-            ${state.orientation}
-          </div>
-        </div>
-        <strong>${money(base)}</strong>
+    <div class="cart-item">
+
+      <div class="cart-icon">
+        ${item.type==="photo"?"📸":"📄"}
       </div>
-    `;
-  }else{
-    base=state.photoPrice;
 
-    description=`
-      <div class="file" style="margin-top:10px">
-        <div class="file-icon">📸</div>
-        <div class="file-info">
-          <div class="file-name">Passport Photo</div>
-          <div class="file-meta">
-            ${state.photoQty} photos • ${state.photoPaper}
-          </div>
+      <div class="cart-main">
+
+        <div class="cart-name">
+          ${item.name}
         </div>
-        <strong>${money(base)}</strong>
+
+        <div class="cart-meta">
+          ${item.meta}
+        </div>
+
       </div>
-    `;
-  }
 
-  document.getElementById("checkoutPrint").textContent=money(base);
-  document.getElementById("checkoutSummary").innerHTML=description;
+      <strong>
+        ${money(item.price)}
+      </strong>
 
-  updateCheckoutTotal();
+    </div>
+
+  `).join("");
+
+  updateCheckout();
 }
 
-function updateCheckoutTotal(){
-  let base=0;
 
-  if(state.currentType==="photo"){
-    base=state.photoPrice;
-  }else{
-    base=calculatePrintCharge();
-  }
+function updateCheckout(){
 
-  const delivery=Number(document.getElementById("distance").value);
-  const grand=base+HANDLING+delivery;
+  const items=cartItemsTotal();
 
-  document.getElementById("checkoutPrint").textContent=money(base);
-  document.getElementById("deliveryCharge").textContent=money(delivery);
-  document.getElementById("grandTotal").textContent=money(grand);
+  const delivery=
+    Number(
+      document.getElementById("deliveryDistance").value
+    );
+
+  const grand=items+HANDLING+delivery;
+
+  document.getElementById("checkoutItemsTotal")
+    .textContent=money(items);
+
+  document.getElementById("checkoutDelivery")
+    .textContent=money(delivery);
+
+  document.getElementById("checkoutGrand")
+    .textContent=money(grand);
 }
+
+
+/* ---------- PAYMENT ---------- */
 
 function startPayment(){
 
-  const name=document.getElementById("customerName").value.trim();
-  const phone=document.getElementById("customerPhone").value.trim();
-  const address=document.getElementById("customerAddress").value.trim();
+  const name=
+    document.getElementById("customerName")
+    .value.trim();
+
+  const phone=
+    document.getElementById("customerPhone")
+    .value.trim();
+
+  const address=
+    document.getElementById("customerAddress")
+    .value.trim();
 
   if(!name){
     toast("Enter customer name");
@@ -930,7 +1784,7 @@ function startPayment(){
   }
 
   if(!/^[0-9]{10}$/.test(phone)){
-    toast("Enter valid 10 digit mobile number");
+    toast("Enter valid mobile number");
     return;
   }
 
@@ -939,44 +1793,61 @@ function startPayment(){
     return;
   }
 
-  const amount=document.getElementById("grandTotal").textContent;
+  const amount=
+    document.getElementById("checkoutGrand")
+    .textContent;
 
-  document.getElementById("paymentAmount").textContent=amount;
+  document.getElementById("paymentAmount")
+    .textContent=amount;
 
-  closeModal("checkoutModal");
-  document.getElementById("paymentModal").classList.add("show");
+  go("payment");
 }
+
 
 /* ---------- SEARCH ---------- */
 
-document.getElementById("search").addEventListener("input",e=>{
-  const q=e.target.value.toLowerCase();
+document.getElementById("searchBox")
+.addEventListener("input",function(){
 
-  document.querySelectorAll(".service").forEach(card=>{
-    card.style.display=
-      card.innerText.toLowerCase().includes(q)
-      ?"block":"none";
-  });
+  const q=this.value.toLowerCase();
+
+  document.querySelectorAll(".service")
+    .forEach(card=>{
+
+      card.style.display=
+        card.innerText.toLowerCase().includes(q)
+        ?"block"
+        :"none";
+
+    });
 });
 
-/* ---------- UPLOAD ANIMATION ---------- */
 
-function fakeUploadAnimation(){
-  const bar=document.getElementById("progressBar");
-  let value=0;
+/* ---------- HELPERS ---------- */
 
-  const timer=setInterval(()=>{
-    value+=10;
-    bar.style.width=value+"%";
-
-    if(value>=100){
-      clearInterval(timer);
-      setTimeout(()=>bar.style.width="0%",500);
-    }
-  },60);
+function money(value){
+  return "₹"+Number(value).toFixed(0);
 }
 
-document.getElementById("fileInput").addEventListener("click",fakeUploadAnimation);
+
+function escapeHtml(value){
+
+  return String(value).replace(
+    /[&<>"']/g,
+    function(char){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+
+      }[char];
+
+    }
+  );
+}
 
 </script>
 
