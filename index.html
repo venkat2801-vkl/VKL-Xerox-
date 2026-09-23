@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#ffffff">
+<title>VKL Studios Xerox</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --primary:#ff3d00;
+  --primary2:#ff6d00;
+  --text:#171717;
+  --muted:#777;
+  --bg:#f7f7f7;
+  --card:#fff;
+  --border:#e9e9e9;
+  --green:#16a34a;
+}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:620px;margin:auto;min-height:100vh;background:#f7f7f7}
+.header{
+  background:#fff;
+  padding:18px 18px 14px;
+  position:sticky;top:0;z-index:20;
+  border-bottom:1px solid #eee;
+}
+.brand{font-size:22px;font-weight:900}
+.brand span{color:var(--primary)}
+.tagline{font-size:12px;color:#777;margin-top:3px}
+.search{
+  margin-top:14px;
+  background:#f3f3f3;
+  border-radius:14px;
+  padding:12px 14px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.search input{border:0;outline:0;background:none;width:100%;font-size:14px}
+main{padding:16px;padding-bottom:95px}
+.hero{
+  background:linear-gradient(135deg,#fff2ec,#fff);
+  border-radius:22px;
+  padding:20px;
+  margin-bottom:16px;
+  border:1px solid #ffe0d4;
+}
+.hero h1{margin:0;font-size:25px}
+.hero p{color:#666;font-size:13px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.service{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:17px;
+  min-height:155px;
+  box-shadow:0 3px 12px #00000008;
+}
+.service .icon{font-size:32px}
+.service h3{margin:9px 0 5px;font-size:16px}
+.service p{font-size:12px;color:#777;margin:0 0 14px;line-height:1.4}
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:11px 14px;
+  font-weight:800;
+}
+.primary{background:var(--primary);color:#fff}
+.secondary{background:#f1f1f1;color:#222}
+.full{width:100%}
+.section{margin-top:22px}
+.section-title{font-size:18px;font-weight:900;margin-bottom:12px}
+.upload-box{
+  background:#fff;
+  border:2px dashed #ddd;
+  border-radius:18px;
+  padding:25px 16px;
+  text-align:center;
+}
+.upload-box .big{font-size:40px}
+.upload-box p{color:#777;font-size:13px}
+.file-list{margin-top:12px}
+.file{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+}
+.file-icon{font-size:25px}
+.file-info{flex:1;min-width:0}
+.file-name{font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-meta{font-size:11px;color:#888;margin-top:3px}
+.remove{background:#fff0ed;color:#e53935;border:0;border-radius:9px;padding:7px}
+.settings{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  border:1px solid var(--border);
+}
+.label{font-size:13px;font-weight:800;margin:15px 0 8px}
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.option{
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:12px;
+  padding:12px 8px;
+  text-align:center;
+  font-size:13px;
+  font-weight:700;
+}
+.option small{display:block;color:#777;font-weight:500;margin-top:3px}
+.option.active{
+  border:2px solid var(--primary);
+  background:#fff5f1;
+  color:var(--primary);
+}
+select,input.text{
+  width:100%;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:12px;
+  background:#fff;
+  outline:none;
+}
+.counter{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#f7f7f7;border-radius:12px;padding:7px;
+}
+.counter button{
+  width:40px;height:40px;border:0;border-radius:10px;background:#fff;font-size:22px;
+}
+.counter strong{font-size:18px}
+.total-box{
+  margin-top:16px;
+  background:#171717;color:#fff;
+  border-radius:17px;padding:17px;
+}
+.total-row{display:flex;justify-content:space-between;margin:6px 0;font-size:13px}
+.total-row.big{font-size:20px;font-weight:900;border-top:1px solid #444;padding-top:12px;margin-top:12px}
+.bottom{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:min(620px,100%);
+  background:#fff;border-top:1px solid #ddd;
+  padding:10px 15px;z-index:30;
+}
+.bottom-inner{display:flex;justify-content:space-around}
+.nav{
+  background:none;border:0;color:#777;font-size:11px;
+}
+.nav.active{color:var(--primary);font-weight:800}
+.modal{
+  display:none;position:fixed;inset:0;background:#0008;
+  z-index:100;align-items:flex-end;justify-content:center;
+}
+.modal.show{display:flex}
+.sheet{
+  width:min(620px,100%);
+  background:#fff;border-radius:25px 25px 0 0;
+  padding:20px;max-height:90vh;overflow:auto;
+}
+.sheet-head{display:flex;justify-content:space-between;align-items:center}
+.close{
+  border:0;background:#f2f2f2;width:36px;height:36px;border-radius:50%
+}
+.payment{
+  background:#f5fff7;border:1px solid #ccefd6;
+  border-radius:15px;padding:14px;margin:14px 0;
+}
+.badge{
+  display:inline-block;padding:5px 9px;border-radius:20px;
+  background:#eaf8ee;color:var(--green);font-size:11px;font-weight:800
+}
+.progress{
+  height:7px;background:#eee;border-radius:10px;overflow:hidden;margin-top:10px
+}
+.progress div{height:100%;width:0;background:var(--primary);transition:.25s}
+.hidden{display:none!important}
+.toast{
+  position:fixed;left:50%;bottom:90px;transform:translateX(-50%);
+  background:#222;color:#fff;padding:12px 18px;border-radius:12px;
+  font-size:13px;z-index:200;opacity:0;pointer-events:none;transition:.3s;
+}
+.toast.show{opacity:1}
+.preview{
+  background:#f2f2f2;border-radius:15px;padding:10px;
+  text-align:center;margin-bottom:12px
+}
+.preview img,.preview iframe{max-width:100%;height:230px;border:0;border-radius:10px;background:#fff}
+.photo-packages{grid-template-columns:repeat(2,1fr)}
+.note{font-size:11px;color:#777;line-height:1.5;margin-top:10px}
+@media(min-width:600px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header class="header">
+  <div class="brand">VKL <span>Studios Xerox</span></div>
+  <div class="tagline">24×7 Print • Xerox • Photo Services</div>
+  <div class="search">
+    🔎
+    <input id="search" placeholder="Search print, photo, passport photo...">
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <h1>Print. Pay. Delivered. 🚀</h1>
+  <p>Upload your documents, choose print settings, pay online and get your prints delivered.</p>
+  <span class="badge">ONLINE PAYMENT ONLY</span>
+</section>
+
+<section class="grid">
+  <div class="service">
+    <div class="icon">📄</div>
+    <h3>Documents</h3>
+    <p>B&W ₹3/side • Colour ₹10/side</p>
+    <button class="btn primary full" onclick="openDocuments()">Upload Files</button>
+  </div>
+
+  <div class="service">
+    <div class="icon">📸</div>
+    <h3>Passport Photos</h3>
+    <p>8 / 16 / 24 / 30 copies</p>
+    <button class="btn secondary full" onclick="openPhotos()">Choose Photos</button>
+  </div>
+
+  <div class="service">
+    <div class="icon">🖼️</div>
+    <h3>Photo Prints</h3>
+    <p>Upload JPG / PNG and print</p>
+    <button class="btn secondary full" onclick="openPhotos()">Upload Photo</button>
+  </div>
+</section>
+
+<section id="documentsSection" class="section hidden">
+  <div class="section-title">📄 Upload Documents</div>
+
+  <div class="upload-box">
+    <div class="big">☁️</div>
+    <h3>Upload your files</h3>
+    <p>PDF / JPG / PNG • Max 50 MB each • Up to 15 files</p>
+    <button class="btn primary" onclick="document.getElementById('fileInput').click()">
+      Select Files
+    </button>
+    <input id="fileInput" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple hidden>
+    <div class="progress"><div id="progressBar"></div></div>
+  </div>
+
+  <div id="fileList" class="file-list"></div>
+
+  <div id="settingsBox" class="settings hidden">
+
+    <div class="section-title">Print Settings</div>
+
+    <div id="previewBox" class="preview hidden"></div>
+
+    <div class="label">Print Colour</div>
+    <div class="options">
+      <button class="option active" data-color="bw" onclick="setColor('bw',this)">
+        ⚫ B&W
+        <small>₹3 / side</small>
+      </button>
+      <button class="option" data-color="color" onclick="setColor('color',this)">
+        🌈 Colour
+        <small>₹10 / side</small>
+      </button>
+    </div>
+
+    <div class="label">Print Side</div>
+    <div class="options">
+      <button class="option active" onclick="setSide(1,this)">
+        Single Side
+        <small>1 side</small>
+      </button>
+      <button class="option" onclick="setSide(2,this)">
+        Both Side
+        <small>2 sides</small>
+      </button>
+    </div>
+
+    <div class="label">Paper Size</div>
+    <select id="paper">
+      <option value="A4">A4 • 70 GSM</option>
+      <option value="A5">A5</option>
+      <option value="A6">A6</option>
+      <option value="Letter">Letter</option>
+      <option value="Legal">Legal</option>
+    </select>
+
+    <div class="label">Orientation</div>
+    <div class="options">
+      <button class="option active" onclick="setOrientation('Portrait',this)">Portrait</button>
+      <button class="option" onclick="setOrientation('Landscape',this)">Landscape</button>
+    </div>
+
+    <div class="label">Number of Copies</div>
+    <div class="counter">
+      <button onclick="changeCopies(-1)">−</button>
+      <strong id="copies">1</strong>
+      <button onclick="changeCopies(1)">+</button>
+    </div>
+
+    <div class="total-box">
+      <div class="total-row">
+        <span>Pages</span>
+        <strong id="pageCount">0</strong>
+      </div>
+      <div class="total-row">
+        <span>Print charge</span>
+        <strong id="printCharge">₹0</strong>
+      </div>
+      <div class="total-row big">
+        <span>Print Total</span>
+        <strong id="printTotal">₹0</strong>
+      </div>
+    </div>
+
+    <button class="btn primary full" style="margin-top:12px" onclick="openCheckout()">
+      Continue to Checkout →
+    </button>
+
+  </div>
+</section>
+
+<section id="photoSection" class="section hidden">
+  <div class="section-title">📸 Passport Photo</div>
+
+  <div class="upload-box">
+    <div class="big">📷</div>
+    <h3>Upload one photo</h3>
+    <p>JPG / PNG</p>
+    <button class="btn primary" onclick="document.getElementById('photoInput').click()">
+      Select Photo
+    </button>
+    <input id="photoInput" type="file" accept="image/*" hidden>
+  </div>
+
+  <div id="photoPreview" class="preview hidden"></div>
+
+  <div id="photoSettings" class="settings hidden">
+
+    <div class="label">Paper Size</div>
+    <div class="options">
+      <button class="option active" onclick="setPhotoPaper('4R',this)">4R</button>
+      <button class="option" onclick="setPhotoPaper('5R',this)">5R</button>
+      <button class="option" onclick="setPhotoPaper('6R',this)">6R</button>
+      <button class="option" onclick="setPhotoPaper('8R',this)">8R</button>
+      <button class="option" onclick="setPhotoPaper('A5',this)">A5</button>
+      <button class="option" onclick="setPhotoPaper('A6',this)">A6</button>
+      <button class="option" onclick="setPhotoPaper('A4',this)">A4</button>
+    </div>
+
+    <div class="label">Photo Package</div>
+    <div class="options photo-packages">
+      <button class="option active" onclick="setPackage(8,100,this)">
+        8 Photos<small>₹100</small>
+      </button>
+      <button class="option" onclick="setPackage(16,150,this)">
+        16 Photos<small>₹150</small>
+      </button>
+      <button class="option" onclick="setPackage(24,200,this)">
+        24 Photos<small>₹200</small>
+      </button>
+      <button class="option" onclick="setPackage(30,250,this)">
+        30 Photos<small>₹250</small>
+      </button>
+    </div>
+
+    <div class="total-box">
+      <div class="total-row">
+        <span>Package</span>
+        <strong id="photoQty">8 Photos</strong>
+      </div>
+      <div class="total-row">
+        <span>Paper</span>
+        <strong id="photoPaperText">4R</strong>
+      </div>
+      <div class="total-row big">
+        <span>Photo Total</span>
+        <strong id="photoTotal">₹100</strong>
+      </div>
+    </div>
+
+    <button class="btn primary full" style="margin-top:12px" onclick="openPhotoCheckout()">
+      Continue to Checkout →
+    </button>
+  </div>
+</section>
+
+</main>
+
+<div class="bottom">
+  <div class="bottom-inner">
+    <button class="nav active" onclick="scrollTopPage()">🏠<br>Home</button>
+    <button class="nav" onclick="openDocuments()">📄<br>Print</button>
+    <button class="nav" onclick="openPhotos()">📸<br>Photos</button>
+    <button class="nav" onclick="openCheckout()">🛒<br>Checkout</button>
+  </div>
+</div>
+
+</div>
+
+<!-- CHECKOUT -->
+<div id="checkoutModal" class="modal">
+  <div class="sheet">
+
+    <div class="sheet-head">
+      <h2>Checkout</h2>
+      <button class="close" onclick="closeModal('checkoutModal')">✕</button>
+    </div>
+
+    <div id="checkoutSummary"></div>
+
+    <div class="label">Customer Name</div>
+    <input id="customerName" class="text" placeholder="Enter your name">
+
+    <div class="label">Mobile Number</div>
+    <input id="customerPhone" class="text" type="tel" maxlength="10" placeholder="10 digit mobile number">
+
+    <div class="label">Delivery Address</div>
+    <input id="customerAddress" class="text" placeholder="Enter delivery address">
+
+    <div class="label">Delivery Distance</div>
+    <select id="distance" onchange="updateCheckoutTotal()">
+      <option value="20">0–2 km • ₹20</option>
+      <option value="30">2–5 km • ₹30</option>
+      <option value="40">5–8 km • ₹40</option>
+      <option value="50">8–12 km • ₹50</option>
+    </select>
+
+    <div class="payment">
+      <strong>🔐 Online Payment Only</strong>
+      <p style="font-size:12px;color:#666;margin-bottom:0">
+        Payment confirmation is required before the order enters the print queue.
+      </p>
+    </div>
+
+    <div class="total-box">
+      <div class="total-row">
+        <span>Print / Photo</span>
+        <strong id="checkoutPrint">₹0</strong>
+      </div>
+      <div class="total-row">
+        <span>Handling</span>
+        <strong>₹10</strong>
+      </div>
+      <div class="total-row">
+        <span>Delivery</span>
+        <strong id="deliveryCharge">₹20</strong>
+      </div>
+      <div class="total-row big">
+        <span>Grand Total</span>
+        <strong id="grandTotal">₹30</strong>
+      </div>
+    </div>
+
+    <button class="btn primary full" style="margin-top:14px" onclick="startPayment()">
+      Pay Online & Place Order →
+    </button>
+
+    <p class="note">
+      Payment gateway will be connected to the live UPI/payment system in the next backend step.
+      This screen does not fake payment success.
+    </p>
+
+  </div>
+</div>
+
+<!-- PAYMENT INFO -->
+<div id="paymentModal" class="modal">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2>Payment</h2>
+      <button class="close" onclick="closeModal('paymentModal')">✕</button>
+    </div>
+
+    <div style="text-align:center;padding:20px 5px">
+      <div style="font-size:55px">💳</div>
+      <h3>UPI Payment</h3>
+      <p style="color:#666;font-size:13px">
+        Google Pay / PhonePe / other UPI apps will be connected here.
+      </p>
+
+      <div class="total-box">
+        <div class="total-row big">
+          <span>Pay</span>
+          <strong id="paymentAmount">₹0</strong>
+        </div>
+      </div>
+
+      <button class="btn secondary full" style="margin-top:12px" onclick="closeModal('paymentModal')">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+/* =========================
+   VKL STUDIOS XEROX
+   FRONT-END VERSION
+========================= */
+
+const state={
+  files:[],
+  color:"bw",
+  sides:1,
+  copies:1,
+  orientation:"Portrait",
+  paper:"A4",
+  photoFile:null,
+  photoPaper:"4R",
+  photoQty:8,
+  photoPrice:100,
+  currentType:"document"
+};
+
+const BW_RATE=3;
+const COLOR_RATE=10;
+const HANDLING=10;
+
+/* ---------- UTIL ---------- */
+
+function money(n){
+  return "₹"+Number(n).toFixed(0);
+}
+
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2200);
+}
+
+function openDocuments(){
+  document.getElementById("documentsSection").classList.remove("hidden");
+  document.getElementById("photoSection").classList.add("hidden");
+  state.currentType="document";
+  document.getElementById("documentsSection").scrollIntoView({behavior:"smooth"});
+}
+
+function openPhotos(){
+  document.getElementById("photoSection").classList.remove("hidden");
+  document.getElementById("documentsSection").classList.add("hidden");
+  state.currentType="photo";
+  document.getElementById("photoSection").scrollIntoView({behavior:"smooth"});
+}
+
+function scrollTopPage(){
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove("show");
+}
+
+/* ---------- DOCUMENT UPLOAD ---------- */
+
+document.getElementById("fileInput").addEventListener("change",async e=>{
+  const selected=[...e.target.files];
+
+  if(selected.length+state.files.length>15){
+    toast("Maximum 15 files allowed");
+    return;
+  }
+
+  for(const file of selected){
+    if(file.size>50*1024*1024){
+      toast(file.name+" is above 50 MB");
+      continue;
+    }
+
+    let pages=1;
+
+    if(file.type==="application/pdf"){
+      pages=await getPdfPages(file);
+    }
+
+    state.files.push({
+      file,
+      name:file.name,
+      size:file.size,
+      pages
+    });
+  }
+
+  renderFiles();
+  updatePrintTotal();
+
+  e.target.value="";
+});
+
+async function getPdfPages(file){
+  /*
+    PDF page count.
+    Uses PDF.js from CDN.
+    If unavailable, falls back to 1.
+  */
+
+  try{
+    if(!window.pdfjsLib){
+      await loadPdfJs();
+    }
+
+    const buffer=await file.arrayBuffer();
+    const pdf=await pdfjsLib.getDocument({data:buffer}).promise;
+    return pdf.numPages;
+  }catch(e){
+    return 1;
+  }
+}
+
+function loadPdfJs(){
+  return new Promise((resolve,reject)=>{
+    if(window.pdfjsLib)return resolve();
+
+    const s=document.createElement("script");
+    s.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
+    s.type="module";
+
+    s.onload=()=>{
+      setTimeout(()=>resolve(),300);
+    };
+
+    s.onerror=reject;
+    document.head.appendChild(s);
+  });
+}
+
+function renderFiles(){
+  const box=document.getElementById("fileList");
+
+  if(!state.files.length){
+    box.innerHTML="";
+    document.getElementById("settingsBox").classList.add("hidden");
+    return;
+  }
+
+  box.innerHTML=state.files.map((f,i)=>`
+    <div class="file">
+      <div class="file-icon">${f.file.type==="application/pdf"?"📄":"🖼️"}</div>
+      <div class="file-info">
+        <div class="file-name">${escapeHtml(f.name)}</div>
+        <div class="file-meta">${f.pages} page${f.pages>1?"s":""} • ${formatSize(f.size)}</div>
+      </div>
+      <button class="remove" onclick="removeFile(${i})">✕</button>
+    </div>
+  `).join("");
+
+  document.getElementById("settingsBox").classList.remove("hidden");
+
+  const first=state.files[0];
+  showPreview(first);
+}
+
+function removeFile(i){
+  state.files.splice(i,1);
+  renderFiles();
+  updatePrintTotal();
+}
+
+function formatSize(bytes){
+  if(bytes<1024)return bytes+" B";
+  if(bytes<1024*1024)return (bytes/1024).toFixed(1)+" KB";
+  return (bytes/1024/1024).toFixed(1)+" MB";
+}
+
+function escapeHtml(str){
+  return str.replace(/[&<>"']/g,m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
+}
+
+/* ---------- PREVIEW ---------- */
+
+function showPreview(item){
+  const box=document.getElementById("previewBox");
+  box.classList.remove("hidden");
+
+  if(item.file.type.startsWith("image/")){
+    const url=URL.createObjectURL(item.file);
+
+    box.innerHTML=`
+      <img src="${url}" alt="Preview">
+      <div style="font-size:11px;color:#777;margin-top:5px">
+        Preview • ${item.pages} page
+      </div>
+    `;
+  }else{
+    box.innerHTML=`
+      <div style="font-size:45px">📄</div>
+      <strong>${escapeHtml(item.name)}</strong>
+      <div style="font-size:11px;color:#777;margin-top:5px">
+        PDF Preview • ${item.pages} pages
+      </div>
+    `;
+  }
+}
+
+/* ---------- PRINT SETTINGS ---------- */
+
+function setColor(value,btn){
+  state.color=value;
+  activateOption(btn);
+  updatePrintTotal();
+}
+
+function setSide(value,btn){
+  state.sides=value;
+  activateOption(btn);
+  updatePrintTotal();
+}
+
+function setOrientation(value,btn){
+  state.orientation=value;
+  activateOption(btn);
+}
+
+function activateOption(btn){
+  const parent=btn.parentElement;
+  [...parent.children].forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function changeCopies(n){
+  state.copies=Math.max(1,Math.min(99,state.copies+n));
+  document.getElementById("copies").textContent=state.copies;
+  updatePrintTotal();
+}
+
+function totalPages(){
+  return state.files.reduce((sum,f)=>sum+f.pages,0);
+}
+
+function calculatePrintCharge(){
+  const pages=totalPages();
+  const rate=state.color==="bw"?BW_RATE:COLOR_RATE;
+
+  /*
+    Rate is per printed side.
+    Single side = 1 side.
+    Both side = 2 sides.
+  */
+  return pages*rate*state.sides*state.copies;
+}
+
+function updatePrintTotal(){
+  const pages=totalPages();
+  const charge=calculatePrintCharge();
+
+  document.getElementById("pageCount").textContent=pages;
+  document.getElementById("printCharge").textContent=money(charge);
+  document.getElementById("printTotal").textContent=money(charge);
+}
+
+/* ---------- PHOTO ---------- */
+
+document.getElementById("photoInput").addEventListener("change",e=>{
+  const file=e.target.files[0];
+  if(!file)return;
+
+  state.photoFile=file;
+
+  const box=document.getElementById("photoPreview");
+  const url=URL.createObjectURL(file);
+
+  box.classList.remove("hidden");
+  box.innerHTML=`
+    <img src="${url}" alt="Passport photo preview">
+    <div style="font-size:11px;color:#777;margin-top:5px">
+      Photo uploaded successfully
+    </div>
+  `;
+
+  document.getElementById("photoSettings").classList.remove("hidden");
+  e.target.value="";
+});
+
+function setPhotoPaper(value,btn){
+  state.photoPaper=value;
+  activateOption(btn);
+
+  document.getElementById("photoPaperText").textContent=value;
+
+  /*
+    Photo capacity is calculated by the system configuration.
+    4R is fixed to the business requirement of 8.
+  */
+  updatePhotoInfo();
+}
+
+function setPackage(qty,price,btn){
+  state.photoQty=qty;
+  state.photoPrice=price;
+
+  activateOption(btn);
+  updatePhotoInfo();
+}
+
+function updatePhotoInfo(){
+  document.getElementById("photoQty").textContent=state.photoQty+" Photos";
+  document.getElementById("photoPaperText").textContent=state.photoPaper;
+  document.getElementById("photoTotal").textContent=money(state.photoPrice);
+}
+
+/* ---------- CHECKOUT ---------- */
+
+function openCheckout(){
+  if(state.currentType==="photo"){
+    openPhotoCheckout();
+    return;
+  }
+
+  if(!state.files.length){
+    toast("First upload a document");
+    openDocuments();
+    return;
+  }
+
+  buildCheckout("document");
+  document.getElementById("checkoutModal").classList.add("show");
+}
+
+function openPhotoCheckout(){
+  if(!state.photoFile){
+    toast("First upload a photo");
+    openPhotos();
+    return;
+  }
+
+  buildCheckout("photo");
+  document.getElementById("checkoutModal").classList.add("show");
+}
+
+function buildCheckout(type){
+  let base=0;
+  let description="";
+
+  if(type==="document"){
+    base=calculatePrintCharge();
+
+    description=`
+      <div class="file" style="margin-top:10px">
+        <div class="file-icon">📄</div>
+        <div class="file-info">
+          <div class="file-name">Document Order</div>
+          <div class="file-meta">
+            ${totalPages()} pages •
+            ${state.color==="bw"?"B&W":"Colour"} •
+            ${state.sides===1?"Single Side":"Both Side"} •
+            ${state.orientation}
+          </div>
+        </div>
+        <strong>${money(base)}</strong>
+      </div>
+    `;
+  }else{
+    base=state.photoPrice;
+
+    description=`
+      <div class="file" style="margin-top:10px">
+        <div class="file-icon">📸</div>
+        <div class="file-info">
+          <div class="file-name">Passport Photo</div>
+          <div class="file-meta">
+            ${state.photoQty} photos • ${state.photoPaper}
+          </div>
+        </div>
+        <strong>${money(base)}</strong>
+      </div>
+    `;
+  }
+
+  document.getElementById("checkoutPrint").textContent=money(base);
+  document.getElementById("checkoutSummary").innerHTML=description;
+
+  updateCheckoutTotal();
+}
+
+function updateCheckoutTotal(){
+  let base=0;
+
+  if(state.currentType==="photo"){
+    base=state.photoPrice;
+  }else{
+    base=calculatePrintCharge();
+  }
+
+  const delivery=Number(document.getElementById("distance").value);
+  const grand=base+HANDLING+delivery;
+
+  document.getElementById("checkoutPrint").textContent=money(base);
+  document.getElementById("deliveryCharge").textContent=money(delivery);
+  document.getElementById("grandTotal").textContent=money(grand);
+}
+
+function startPayment(){
+
+  const name=document.getElementById("customerName").value.trim();
+  const phone=document.getElementById("customerPhone").value.trim();
+  const address=document.getElementById("customerAddress").value.trim();
+
+  if(!name){
+    toast("Enter customer name");
+    return;
+  }
+
+  if(!/^[0-9]{10}$/.test(phone)){
+    toast("Enter valid 10 digit mobile number");
+    return;
+  }
+
+  if(!address){
+    toast("Enter delivery address");
+    return;
+  }
+
+  const amount=document.getElementById("grandTotal").textContent;
+
+  document.getElementById("paymentAmount").textContent=amount;
+
+  closeModal("checkoutModal");
+  document.getElementById("paymentModal").classList.add("show");
+}
+
+/* ---------- SEARCH ---------- */
+
+document.getElementById("search").addEventListener("input",e=>{
+  const q=e.target.value.toLowerCase();
+
+  document.querySelectorAll(".service").forEach(card=>{
+    card.style.display=
+      card.innerText.toLowerCase().includes(q)
+      ?"block":"none";
+  });
+});
+
+/* ---------- UPLOAD ANIMATION ---------- */
+
+function fakeUploadAnimation(){
+  const bar=document.getElementById("progressBar");
+  let value=0;
+
+  const timer=setInterval(()=>{
+    value+=10;
+    bar.style.width=value+"%";
+
+    if(value>=100){
+      clearInterval(timer);
+      setTimeout(()=>bar.style.width="0%",500);
+    }
+  },60);
+}
+
+document.getElementById("fileInput").addEventListener("click",fakeUploadAnimation);
+
+</script>
+
+</body>
+</html>
